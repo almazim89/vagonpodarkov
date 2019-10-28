@@ -1,0 +1,43 @@
+{% extends 'vp/base.html' %}
+
+{% block title %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.title }} | {{ title.name_page }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block header %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.h1 }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block descript %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.description }} 
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block content %}
+	{% for title in titles %}
+		{% if title.id == ids %}
+			<h2>{{ title.h2 }}</h2>
+			<p id="box" class="box">{{ title.description2 }}</p>
+			<h3>{{ title.h3_classic }}</h3>
+			<p id="box" class="box" align="left">{{ title.descript_classic | linebreaksbr }}</p>
+			<h3>{{ title.h3_premium }}</h3>
+			<p id="box" class="box" align="left">{{ title.descript_premium | linebreaksbr }}</p>
+			{% for file in files %}
+				{% if file.title == 'blank_zakaza' %}
+					<a href="{{ file.media.url }}" download><button type="button" class="btn btn-success">Скачать бланк заявки</button></a>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+{% endblock %}

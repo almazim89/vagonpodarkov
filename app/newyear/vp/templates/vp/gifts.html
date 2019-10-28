@@ -1,0 +1,93 @@
+{% extends 'vp/base.html' %}
+
+{% block title %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.title }} | {{ title.name_page }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block header %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.h1 }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block descript %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.description }} 
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block content %}
+	{% for title in titles %}
+		{% if title.id == ids %}
+			<h3>{{ title.h2 }}</h3><br>
+			<h3>{{ title.h3_classic }}</h3>
+			<p class="box">{{ title.descript_classic }}</p>
+			<div class="row">
+				{% for classic in classics %}
+				<div class="col-md-4">
+					<div id="box" class="box">
+						<h5>{{ classic.title }}</h5>
+						<a href="{{ classic.get_absolute_url }}">
+							{% for classic_img in classic_imgs %}
+								{% if classic.media == classic_img.title %}
+									<img src="{{ classic_img.media.url }}" width="auto" height="200" class="p-3" title="{{ classic.media }}">
+								{% endif %}
+							{% endfor %}
+						</a>
+						<div style="display: inline-flex;">
+							<span class="weight"><img src="/media/weight.png" title="вес"> {{ classic.gram }} грамм</span>
+							<span class="price"><img src="/media/price.png" title="цена"> {{ classic.price }} руб.</span>
+						</div>
+						<div class="btns">
+							<a href="{{ classic.get_absolute_url }}">
+								<button type="button" class="btn btn-success" id="more">Подробнее</button>
+							</a>
+							<a href="#">
+								<button type="button" class="btn btn-danger" id="order_cl">Заказать</button>
+							</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div><br>
+			<h3>{{ title.h3_premium }}</h3>
+			<p class="box">{{ title.descript_premium }}</p>
+			<div class="row">
+				{% for premium in premiums %}
+					<div class="col-md-4">
+						<div id="box" class="box">
+							<h5>{{ premium.title }}</h5>
+							<a href="{{ premium.get_absolute_url }}">
+								{% for premium_img in premium_imgs %}
+									{% if premium.media == premium_img.title %}
+										<img src="{{ premium_img.media.url }}" width="auto" height="200" class="p-3" title="{{ premium.media }}">
+									{% endif %}
+								{% endfor %}
+							</a>
+							<div style="display: inline-flex;">
+								<span class="weight"><img src="/media/weight.png" title="вес"> {{ premium.gram }} грамм</span>
+								<span class="price"><img src="/media/price.png" title="цена"> {{ premium.price }} руб.</span>
+							</div>
+							<div class="btns">
+								<a href="{{ premium.get_absolute_url }}">
+									<button type="button" class="btn btn-success" id="more">Подробнее</button>
+								</a>
+								<a href="#">
+									<button type="button" class="btn btn-danger" id="order_pr">Заказать</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endblock %}

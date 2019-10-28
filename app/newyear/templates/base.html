@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="icon" href="media/main/favicon.ico" sizes="64x64" type="image/png">
+    <title>
+    	{% block title %}
+    	{% endblock %}
+    </title>
+</head>
+<body>
+	<div id="top_header">
+		<div class="contacs_left">
+			{% for i in top_numbers_left %}
+			<div class="c_left">
+				<span>{{ i.city }}</span>
+				<span>{{ i.phone }}</span>
+			</div>
+			{% endfor %}
+		</div>
+		<div class="contacs_right">
+			{% for i in top_numbers_right %}
+			<div class="c_right">
+				<span>{{ i.city }}</span>
+				<span>{{ i.phone }}</span>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e4e4ff;">
+	<div id="logo">
+	  <a class="navbar-brand logo" href="{% url 'index_url' %}" title="На главную"></a>
+	</div>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto" style="margin: 0 auto">
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'index_url' %}"><img src="/media/main.png" width="32" title="Главная"> Главная</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'show_gifts_url' %}"><img src="/media/gifts.png" width="32" title="Подарки"> Подарки</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'prices_input_url' %}"><img src="/media/prices.png" width="32" title="Прайс-листы"> Прайс-листы</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'delivery_input_url' %}"><img src="/media/buy.png" width="32" title="Доставка"> Как купить</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'contacts_input_url' %}"><img src="/media/contacts.png" width="32" title="Контакты"> Контакты</a>
+	      </li>
+	    </ul>
+	    <form class="form-inline my-2 my-lg-0" action="{% url 'show_gifts_url' %}">
+	      <input class="form-control mr-sm-2" type="search" placeholder="Поиск..." aria-label="Search" name="search">
+	      <button class="btn btn my-2 my-sm-0" type="submit" style="margin-left: -55px;"><img src="/media/search.png" title="Найти"></button>
+	    </form>
+	  </div>
+	</nav>
+	<div class="container mt-3" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="mb-3">
+					{% block header %}
+					{% endblock %}
+				</h1>
+				<p>
+					{% block descript %}
+					{% endblock %}
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				{% block content %}
+				{% endblock %}
+			</div>
+		</div>
+		<h4 class="mt-5">Остались вопросы? Напишите нам!</h4>
+		<button type="button" class="btn btn-outline-primary" style="width: 50%" id="send_message">Отправить сообщение</button>
+		<form action="#" method="POST" class="col-md-6 box" style="display:none;" id="feedback">
+			<button type="button" class="btn btn-danger" id="close_form" style="float:right;font-weight:bold" title="Закрыть форму">X</button>
+			{% csrf_token %}
+			<input type="text" required placeholder="Ваше имя" name="name" class="form-control"><br>
+			<input type="email" required placeholder="Ваш email" name="mail" class="form-control"><br>
+			<textarea name="text" required placeholder="Текст сообщения" cols="30" rows="10" class="form-control"></textarea><br>
+			<button type="submit" class="btn btn-success">Отправить</button>
+		</form>
+	</div>
+	<div id="footer" style="background: #ffcea0">
+		{% for i in footer %}
+		<div class="container mt-5 pt-3 pb-5" align="center">
+			<h5>{{ i.title1 }}</h5>
+			<div class="social_icons">
+				{% for i in socials %}
+				<a href="{{ i.urls }}" target="a_blank">
+					<img src="{{ i.media.url }}" title="twitter" width="50" height="50">
+				</a>
+				{% endfor %}
+			</div>
+				<hr>
+			<p>{{ i.texts1 | linebreaksbr }}</p>
+			<p class="mail"><img src="/media/email.png" title="email"> {{ i.mail }}</p>
+			<h5>{{ i.title2 }}</h5>
+			{% for title in titles %}
+				{% if title.id == 7 %}
+					<div class="row filials">
+						<div class="col-md-6">
+							<p align="left">{{ title.descript_classic | linebreaksbr }}</p>
+						</div>
+						<div class="col-md-6">
+							<p align="left">{{ title.descript_premium | linebreaksbr }}</p>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+			<p align="left" style="font-size: 12px">{{ i.texts2 | linebreaksbr }}</p>
+				<hr>
+			<p class="copy">{{ i.copy }}</p>
+		</div>
+		{% endfor %}
+	</div>
+	{% load static %}
+	<script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

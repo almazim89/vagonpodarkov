@@ -1,0 +1,23 @@
+@media only screen and (max-width: 767px) and (min-width: 320px) {
+	.contacs_left, .contacs_right {
+	    font-size: 11px;
+	    padding: 0;
+	    background: rgba(255,255,255,0.5);
+	}
+	.popular, .blocks{
+		display: block !important;
+	}
+	.popular .box, .block, .view_img img{
+		width: 100% !important;
+	}
+	.collections #box{
+		width: 33% !important;
+	}
+	.collections .box img{
+		height: 35px;
+	}
+	.lists{
+		padding: 0 !important;
+	    font-size: 8px;
+	}
+}

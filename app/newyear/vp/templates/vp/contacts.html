@@ -1,0 +1,41 @@
+{% extends 'vp/base.html' %}
+
+{% block title %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.title }} | {{ title.name_page }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block header %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.h1 }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block descript %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.description }} 
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block content %}
+	{% for title in titles %}
+		{% if title.id == ids %}
+			<h2>{{ title.h2 }}</h2>
+			<div class="row">
+				<div class="col-md-6">
+					<p id="box" class="box" align="left">{{ title.descript_classic | linebreaksbr }}</p>
+				</div>
+				<div class="col-md-6">
+					<p id="box" class="box" align="left">{{ title.descript_premium | linebreaksbr }}</p>
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endblock %}

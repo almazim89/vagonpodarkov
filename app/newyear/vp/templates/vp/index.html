@@ -1,0 +1,120 @@
+{% extends 'vp/base.html' %}
+
+{% block title %}
+	{% for title in titles %} 
+		{% if title.id == ids %}
+			{{ title.title }} | {{ title.name_page }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block header %}
+	{% for title in titles %}
+		{% if title.id == ids %}
+			{{ title.h1 }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block descript %}
+	{% for title in titles %}
+		{% if title.id == ids %}
+			{{ title.description }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block content %}
+	{% for title in titles %}
+		{% if title.id == ids %}
+			<h2>{{ title.h2 }}</h2><br>
+			<div class="row popular">
+				{% for i in slide_classic %}
+				<div id="box" class="box" style="width: 20%">
+					<a href="{{ i.get_absolute_url }}">
+						{% for classic_img in classic_imgs %}
+							{% if i.media == classic_img.title %}
+								<img src="{{ classic_img.media.url }}" width="auto" height="150" title="{{ i.media }}">
+							{% endif %}
+						{% endfor %}
+					</a>
+				</div>
+				{% endfor %}
+				{% for i in slide_premium %}
+				<div id="box" class="box" style="width: 20%">
+					<a href="{{ i.get_absolute_url }}">
+						{% for premium_img in premium_imgs %}
+							{% if i.media == premium_img.title %}
+								<img src="{{ premium_img.media.url }}" width="auto" height="150" title="{{ i.media }}">
+							{% endif %}
+						{% endfor %}
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+			<h3 style="margin: 20px auto;">{{ title.h3_classic }}</h3>
+			<div class="row blocks">
+				{% for block in blocks %}
+					<div class="block" style="width: 20%">
+						<img src="{{ block.media.url }}" width="auto" height="150">
+						<div style="font-weight: bold; margin-top: 10px">{{ block.title }}</div>
+						<p>{{ block.texts | linebreaksbr }}</p>
+					</div>
+				{% endfor %}
+			</div>
+			<h3>{{ title.h3_premium }}</h3>
+			<div class="row collections">
+				<div class="col-md-6">
+					<h4>Классика</h4>
+					<div class="row" style="padding: 0 20px;">
+						{% for classic in classics %}
+						<div id="box" class="box" style="width: 20%">
+							<a href="{{ classic.get_absolute_url }}">
+								{% for classic_img in classic_imgs %}
+									{% if classic.media == classic_img.title %}
+										<img src="{{ classic_img.media.url }}" width="auto" height="65" title="{{ classic.media }}">
+									{% endif %}
+								{% endfor %}
+							</a>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-md-6">
+					<h4>Премиум</h4>
+					<div class="row" style="padding: 0 20px;">
+						{% for premium in premiums %}
+						<div id="box" class="box" style="width: 20%">
+							<a href="{{ premium.get_absolute_url }}">
+								{% for premium_img in premium_imgs %}
+									{% if premium.media == premium_img.title %}
+										<img src="{{ premium_img.media.url }}" width="auto" height="65" title="{{ premium.media }}">
+									{% endif %}
+								{% endfor %}
+							</a>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+				<br>
+			<h4>8 типов упаковки</h4>
+			<div class="row">
+				{% for type_box in type_boxes %}
+					<div id="types" class="col-md-3 mt-3 mb-3">
+						<a href="{% url 'show_gifts_url' %}">
+							<div id="box" class="box">
+								<img src="{{ type_box.media.url }}" width="auto" height="150">
+								<h3>{{ type_box.title }}</h3>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+			</div><br>
+			<h4>Мы содрудничаем с крупнейшими производителями:</h4>
+			{% for manufacture in manufactures %}
+				<img src="{{ manufacture.media.url }}" width="100">
+		    {% endfor %}
+		{% endif %}
+	{% endfor %}
+{% endblock %}

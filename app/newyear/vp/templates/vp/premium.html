@@ -1,0 +1,73 @@
+{% extends 'vp/base.html' %}
+
+{% block title %}
+	{{ premium.title }}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="row mt-3">
+	<div class="col-md-5">
+		<div id="composition" class="view_img">
+			{% for premium_img in premium_imgs %}
+				{% if premium.media == premium_img.title %}
+					<img src="{{ premium_img.media.url }}" width="350" class="mb-3">
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="col-md-7" id="composition">
+		<h3>{{ premium.title }}</h3>
+			<hr>
+		<div class="dates">
+			<p>Серия: {{ premium.series }}</p>
+			<p>Тип упаковки: {{ premium.typebox }}</p>
+			<div class="weight"><img src="/media/weight.png" title="вес"> {{ premium.gram }} грамм</div>
+			<div class="price"><img src="/media/price.png" title="цена"> {{ premium.price }} руб.</div>
+		</div>
+			<hr>
+		{% for file in files %}
+			{% if premium.files == file.title %}
+				<a href="{{ file.media.url }}" download><button type="button" class="btn btn-success">Скачать состав</button></a>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<div class="col-md-12 mt-5 lists" id="composition">
+		<h4>Список сладостей подарка:</h4>
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">Фото</th>
+		      <th scope="col">Название</th>
+		      <th scope="col">Описание</th>
+		      <th scope="col">Производитель</th>
+		      <th scope="col">Кол.</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	{% for sweet in sweets %}
+			  	{% if sweet.number == premium.slug and sweet.series == premium.series %}
+			    <tr>
+			      {% for sweet_img in sweets_img %}
+			      	{% if sweet.title == sweet_img.title %}
+			      		<td><img src="{{ sweet_img.media.url }}" width="100"></td>
+					{% endif %}
+			      {% endfor %}
+			      <td>{{ sweet.title }}</td>
+			      <td>{{ sweet.descript }}</td>
+			      {% for manufacture in manufactures %}
+					{% if sweet.manufact == manufacture.title %}
+						<td><img src="{{ manufacture.media.url }}" width="100"></td>
+					{% endif %}
+			      {% endfor %}
+			      <td align="center">{{ sweet.counts }}</td>
+			    </tr>
+			    {% endif %}
+		    {% endfor %}
+		  </tbody>
+		</table>
+	</div>		
+</div>
+{% endblock %}
